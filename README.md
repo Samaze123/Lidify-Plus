@@ -1,3 +1,6 @@
+### This is a fork of Lidify from thewicklowwolf. You can find the original repo here: 
+#### https://hub.docker.com/r/thewicklowwolf/lidify
+
 ![Build Status](https://github.com/TheWicklowWolf/Lidify/actions/workflows/main.yml/badge.svg)
 ![Docker Pulls](https://img.shields.io/docker/pulls/thewicklowwolf/lidify.svg)
 
@@ -71,3 +74,4 @@ Certain values can be set via environment variables:
 ---
 
 https://hub.docker.com/r/thewicklowwolf/lidify
+
