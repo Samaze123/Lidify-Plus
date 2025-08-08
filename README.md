@@ -2,7 +2,7 @@
 ![Docker Pulls](https://img.shields.io/docker/pulls/thewicklowwolf/lidify.svg)
 
 
-<p align="center">
+<p>
   <img src="/src/static/lidify.png" alt="image">
 </p>
 
@@ -21,15 +21,30 @@ services:
     image: thewicklowwolf/lidify:latest
     container_name: lidify
     volumes:
-      - /path/to/config:/lidify/config
+      - ./config:/lidify/config
       - /etc/localtime:/etc/localtime:ro
     ports:
       - 5000:5000
     restart: unless-stopped
     environment:
-      - last_fm_api_key=<insert>
-      - last_fm_api_secret=<insert>
-      - mode=LastFM
+      LAST_FM_API_KEY: <insert>
+      LAST_FM_API_SECRET: <insert>
+
+```
+If you put both Lidarr and Lidify in the same network, you can use the Lidarr container name as the address:
+```yaml
+services:
+  lidify:
+    environment:
+      LIDARR_ADDRESS: http://lidarr:8686
+    networks:
+      lidarr_network:
+  lidarr:
+    ...: ...
+    networks:
+      lidarr_network:
+networks:
+  lidarr_network:
 ```
 
 ## Configuration via environment variables
@@ -38,33 +53,31 @@ Certain values can be set via environment variables:
 
 * __PUID__: The user ID to run the app with. Defaults to `1000`. 
 * __PGID__: The group ID to run the app with. Defaults to `1000`.
-* __lidarr_address__: The URL for Lidarr. Defaults to `http://192.168.1.2:8686`. Can be configured from the application as well.
-* __lidarr_api_key__: The API key for Lidarr. Defaults to ``. Can be configured from the application as well.
-* __root_folder_path__: The root folder path for music. Defaults to `/data/media/music/`. Can be configured from the application as well.
-* __spotify_client_id__: The Client ID for Spotify. Defaults to ``. Can be configured from the application as well, but see https://github.com/TheWicklowWolf/Lidify/issues/24 .
-* __spotify_client_secret__: The Client Secret for Spotify. Defaults to ``. Can be configured from the application as well, but see https://github.com/TheWicklowWolf/Lidify/issues/24 .
-* __fallback_to_top_result__: Whether to use the top result if no match is found. Defaults to `False`.
-* __lidarr_api_timeout__: Timeout duration for Lidarr API calls. Defaults to `120`.
-* __quality_profile_id__: Quality profile ID in Lidarr. Defaults to `1`.
-* __metadata_profile_id__: Metadata profile ID in Lidarr. Defaults to `1`
-* __search_for_missing_albums__: Whether to start searching for albums when adding artists. Defaults to `False`
-* __dry_run_adding_to_lidarr__: Whether to run without adding artists in Lidarr. Defaults to `False`
-* __app_name__: Name of the application. Defaults to `Lidify`.
-* __app_rev__: Application revision. Defaults to `0.01`.
-* __app_url__: URL of the application. Defaults to `Random URL`.
-* __last_fm_api_key__: The API key for LastFM. Defaults to ``.
-* __last_fm_api_secret__: The API secret for LastFM. Defaults to ``.
-* __mode__: Mode for discovery (Spotify or LastFM). Defaults to `Spotify`.
-* __auto_start__: Whether to run automatically at startup. Defaults to `False`.
-* __auto_start_delay__: Delay duration for Auto Start in Seconds (if enabled). Defaults to `60`.
+* __LIDARR_ADDRESS__: The URL for Lidarr. Defaults to `http://192.168.1.2:8686`. Can be configured from the application as well.
+* __LIDARR_API_KEY__: The API key for Lidarr. Defaults to ``. Can be configured from the application as well.
+* __ROOT_FOLDER_PATH__: The root folder path for music. Defaults to `/data/media/music/`. Can be configured from the application as well.
+* __FALLBACK_TO_TOP_RESULT__: Whether to use the top result if no match is found. Defaults to `False`.
+* __LIDARR_API_TIMEOUT__: Timeout duration for Lidarr API calls. Defaults to `120`.
+* __QUALITY_PROFILE_ID__: Quality profile ID in Lidarr. Defaults to `1`.
+* __METADATA_PROFILE_ID__: Metadata profile ID in Lidarr. Defaults to `1`
+* __SEARCH_FOR_MISSING_ALBUMS__: Whether to start searching for albums when adding artists. Defaults to `False`
+* __DRY_RUN_ADDING_TO_LIDARR__: Whether to run without adding artists in Lidarr. Defaults to `False`
+* __APP_NAME__: Name of the application. Defaults to `Lidify`.
+* __APP_REV__: Application revision. Defaults to `0.01`.
+* __APP_URL__: URL of the application. Defaults to `Random URL`.
+* __LAST_FM_API_KEY__: The API key for LastFM. Defaults to ``.
+* __LAST_FM_API_SECRET__: The API secret for LastFM. Defaults to ``.
+* __MODE__: Mode for discovery (Right now, only LastFM). Defaults to `LastFM`.
+* __AUTO_START__: Whether to run automatically at startup. Defaults to `False`.
+* __AUTO_START_DELAY__: Delay duration for Auto Start in Seconds (if enabled). Defaults to `60`.
 
 ---
 
-<p align="center">
+<p>
   <img src="/src/static/light.png" alt="image">
 </p>
 
-<p align="center">
+<p>
   <img src="/src/static/dark.png" alt="image">
 </p>
 
